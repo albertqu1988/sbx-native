@@ -130,7 +130,6 @@ reading "\n确定继续安装吗？(直接回车即确认安装)【y/n】: " cho
         read_variables
         argo_configure
         install_service
-        show_nodes
       ;;
     [Nn]) exit 0 ;;
     *) red "无效的选择，请输入y或n" && menu ;;
@@ -234,10 +233,10 @@ EOF
   rm -rf $HOME/.npmrc > /dev/null 2>&1
   cd ${WORKDIR} && npm install dotenv axios koffi --silent > /dev/null 2>&1
   devil www restart ${USERNAME}.${CURRENT_DOMAIN} > /dev/null 2>&1
-  yellow "等待10秒,服务启动中...."
-  sleep 10
+  yellow "服务启动中...."
+  sleep 3
   if curl -o /dev/null -m 3 -s -w "%{http_code}" https://${USERNAME}.${CURRENT_DOMAIN} | grep -q "200"; then
-      green "服务已启动成功,请访问 https://${USERNAME}.${CURRENT_DOMAIN} 查看"
+      green "服务已启动成功,请先访问 https://${USERNAME}.${CURRENT_DOMAIN}  启动服务，过20秒再访问订阅获取节点"
   else
       red "服务启动失败，请检查端口是否被占用或配置是否正确"
   fi
